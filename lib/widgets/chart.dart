@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../models/transaction.dart';
-import './char_bar.dart';
+import './chart_bar.dart';
 
 class Chart extends StatelessWidget {
+  
   final List<Transaction> recentTransactions;
-
   Chart(this.recentTransactions);
 
   List<Map<String, Object>> get groupedTransactionValues {
@@ -24,14 +24,14 @@ class Chart extends StatelessWidget {
       }
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
-        'amount': totalSum
+        'amount': totalSum,
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpending {
-    return groupedTransactionValues.fold(0.0, (sum, item) {
-      return sum += item['amount'];
+    return groupedTransactionValues.fold(0.0, (sum, groupedtx) {
+      return sum += groupedtx['amount'];
     });
   }
 
